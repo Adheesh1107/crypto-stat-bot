@@ -1,0 +1,135 @@
+version: "2.0"
+
+stories:
+
+# Coin Price fetch stories
+
+- story: User wants to know the price of a Coin
+  steps:
+  - intent: fetch_coin_price
+  - action: utter_ask_coin_name
+  - intent: provide_coin_name
+    entities: 
+      - coin_name: "litecoin"
+  - action: utter_ask_fiat_preference
+  - intent: provide_fiat_preference
+    entities:
+      - fiat_preference: "USD"
+  - action: action_fetch_coin_price
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+- story: User wants to know the price of a Coin - coin mentioned
+  steps:
+  - intent: fetch_coin_price
+    entities:
+      - coin_name: "bitcoin"
+  - action: utter_ask_fiat_preference
+  - intent: provide_fiat_preference
+    entities:
+      - fiat_preference: "USD"
+  - action: action_fetch_coin_price
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+- story: User wants to know the price of a Coin - coin and fiat mentioned
+  steps:
+  - intent: fetch_coin_price
+    entities:
+      - coin_name: "bitcoin"
+      - fiat_preference: "INR"
+  - action: action_fetch_coin_price
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+# Coin comparison
+
+- story: User wants to compare 2 coins - no coins are mentioned
+  steps:
+  - intent: compare_coins
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: null
+  - action: utter_compare_requirements
+  - intent: provide_coin_name
+    entities:
+      - coin_name: ["bitcoin","eth"]
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: true
+  - action: action_compare_coins
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+- story: User wants to compare 2 coins  -  both coins are mentioned
+  steps:
+  - intent: compare_coins
+    entities:
+      - coin_name: ["bitcoin","eth"]
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: true
+  - action: action_compare_coins
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+
+- story: User wants to compare 2 coins - 1 coin mentioned; odd case scenario
+  steps:
+  - intent: compare_coins
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: null
+  - action: utter_compare_requirements
+  - intent: provide_coin_name
+    entities:
+      - coin_name: ["bitcoin"]
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: null
+  - action: utter_compare_invalid_input
+  - intent: provide_coin_name
+    entities:
+      - coin_name: ["bitcoin","eth"]
+  - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+  - slot_was_set:
+    - compare_possible: true
+  - action: action_compare_coins
+  - action: utter_ask_continue
+  - checkpoint: ask_continue
+
+# - story: User wants to compare 2 coins - 1 coin mentioned; odd case scenario
+#   steps:
+#   - intent: compare_coins
+#     entities:
+#       - coin_name: ["eth"]
+#   - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+#   - slot_was_set:
+#     - compare_possible: null
+#   - action: utter_compare_invalid_input
+#   - intent: provide_coin_name
+#     entities:
+#       - coin_name: ["bitcoin","eth"]
+#   - action: action_check_compare_possibility    # validate whether there are 2 coins to compare
+#   - slot_was_set:
+#     - compare_possible: true
+#   - action: action_compare_coins
+#   - action: utter_ask_continue
+#   - checkpoint: ask_continue
+
+  # CHECKPOINTS
+
+- story: checkpoint - User chose to continue interaction 
+  steps: 
+  - checkpoint: ask_continue
+  - intent: affirm
+  - action: utter_features_available
+
+- story: checkpoint - User chose not to continue interaction
+  steps: 
+  - checkpoint: ask_continue
+  - or:
+      - intent: deny
+      - intent: goodbye
+  - action: utter_goodbye
+

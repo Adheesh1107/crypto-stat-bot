@@ -1,0 +1,7 @@
+.vscode
+models
+.env
+*.dot
+__pycache__
+results
+loggers

@@ -1,0 +1,807 @@
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - wait, are you a bot?
+    - wait are you a bot?
+
+- intent: out_of_scope
+  examples: |
+    - what is 2 + 5?
+    - buy me bitcoin
+    - i want to buy cryptocurrency here
+
+# Chitchat handling
+- intent: chitchat/ask_name
+  examples: |
+    - What is your name?
+    - May I know your name?
+    - What do people call you?
+    - Do you have a name for yourself?
+  
+- intent: chitchat/ask_weather
+  examples: |
+    - What's the weather like today?
+    - Does it look sunny outside today?
+    - Oh, do you mind checking the weather for me please?
+    - I like sunny days in Berlin.
+
+# FAQs handling
+- intent: faq/ask_exchanges
+  examples: |
+    - where can i buy these coins?
+    - can i buy these coins?
+    - where can i trade crypto-coins?
+
+    - where can i buy these tokens?
+    - can i buy these tokens?
+    - where can i trade crypto-tokens?  
+
+- intent: faq/difference_from_stocks
+  examples: |
+    - what is the difference between stocks and cryptocurrency?
+    - how cryptocurrency is different from stocks?
+    - how crypto is different from stocks?
+    - difference between stocks and cryptocurrency
+    - difference between stocks and crypto
+  
+- intent: faq/supporting_fiat_currencies
+  examples: |
+    - what fiat currencies do you support?
+    - what fiat do you support?
+    - what all fiat do you support?
+    - fiats supported?
+
+- intent: faq/define_fiat
+  examples: |
+    - what do you mean by fiat?
+    - what does fiat mean?
+    - what is an example for fiat?
+
+- intent: faq/available_coins
+  examples: |
+    - How many coins are there right now?
+    - how many cryptocurrencies are there right now?
+    - how many cryptocurrency are there right now?
+    - how many crypto tokens are there right now?
+    - how many tokens are there right now?
+    - How many coins are there?
+    - how many cryptocurrencies are there?
+    - how many cryptocurrency are there?
+    - how many crypto tokens are there?
+    - how many tokens are there?
+    - number of cryptocurrency coins out there?
+    - no of cryptocurrency tokens?
+
+- intent: faq/available_exchanges
+  examples: |
+    - how many exchanges are there right now?
+    - How many coin exchanges are there right now?
+    - how many cryptocurrency exchanges are there right now?
+    - how many crypto exchanges are there right now?
+    - how many token exchanges are there right now?
+
+    - how many exchanges are there?
+    - How many coin exchanges are there?
+    - how many cryptocurrency exchanges are there?
+    - how many crypto exchanges are there?
+    - how many token exchanges are there?
+    
+    - no of exchanges available?
+    - no of exchanges?
+    
+    - no. of exchanges available?
+    - no. of exchanges?
+
+- intent: faq/cmc_rank_meaning
+  examples: |
+    - what does cmc rank mean?
+    - cmc what?
+    - cmc rank?
+    - cmc_rank?
+
+- intent: faq/gbp_meaning
+  examples: |
+    - what does gbp stand for?
+    - gbp means?
+    - what is the meaning of gbp?
+    - i don't know what is gbp
+  
+- intent: compare_coins
+  examples: |
+    - compare 2 coins
+    - compare
+    - i want to compare coins
+    - compare coins
+
+    - compare [btc](coin_name) with [eth](coin_name)
+    - compare [btc](coin_name) and [eth](coin_name)
+    
+    - i want a comparison between [btc](coin_name) and [eth](coin_name)
+    - i want to know the difference between [btc](coin_name) and [eth](coin_name)
+    - please compare [btc](coin_name) and [eth](coin_name)
+    - [btc](coin_name) versus [eth](coin_name)
+    - [btc](coin_name) vs [eth](coin_name)
+    - difference between [btc](coin_name) and [eth](coin_name)
+
+    # just one coin is provided
+    - compare [btc](coin_name)
+    - compare [btc](coin_name)
+    
+    - i want a comparison between [btc](coin_name)
+    - i want to know the difference between [btc](coin_name)
+    - please compare [btc](coin_name)
+    - difference between [btc](coin_name)
+
+
+- intent: fetch_coin_price
+  examples: | 
+    # user mentions price alone
+    - price
+    - i want to know about the price of a coin
+    - i want to know cost of a coin
+    - cost
+    - price of a coin
+    - value of a cryptocurrency
+
+    # 1 coin_name only
+    - I want to know the price of [tron](coin_name) 
+    - price of [tron](coin_name)
+    - tell me the price of [tron](coin_name)
+    - tell the price of [tron](coin_name)
+    - get me the price of [tron](coin_name)
+
+    # 1 coin_name with 1 fiat_preference 
+    - I want to know the price of [bitcoin](coin_name) in [rupee](fiat_preference)
+    - price of [tron](coin_name) in [pounds](fiat_preference)
+    - tell me the price of [tron](coin_name) in [dollars](fiat_preference)
+    - tell the price of [tron](coin_name) in [euros](fiat_preference)
+    - get me the price of [tron](coin_name) in [rupees](fiat_preference)
+
+    # 1 coin_name with 2 fiat_preference 
+    - I want to know the price of [bitcoin](coin_name) in [rupee](fiat_preference) and [dollars](fiat_preference)
+    - price of [tron](coin_name) in [pounds](fiat_preference) and [usd](fiat_preference)
+    - tell me the price of [tron](coin_name) in [dollars](fiat_preference) and [euros](fiat_preference)
+    - tell the price of [tron](coin_name) in [euros](fiat_preference) and [pounds](fiat_preference)
+    - get me the price of [tron](coin_name) in [pounds](fiat_preference) and [rupee](fiat_preference)
+
+    # 2 coin_name only
+    - I want to know the price of [tron](coin_name) and [bitcoin](coin_name)
+    - price of [tron](coin_name) and [bitcoin](coin_name)
+    - tell me the price of [tron](coin_name) and [bitcoin](coin_name)
+    - tell the price of [tron](coin_name) and [bitcoin](coin_name)
+    - get me the price of [tron](coin_name) and [bitcoin](coin_name)
+
+    # 2 coin_name with 1 fiat_preference 
+    - I want to know the price of [tron](coin_name) and [bitcoin](coin_name) in [rupees](fiat_preference)
+    - price of [tron](coin_name) and [bitcoin](coin_name) in [dollars](fiat_preference)
+    - tell me the price of [tron](coin_name) and [bitcoin](coin_name) in [pounds](fiat_preference)
+    - tell the price of [tron](coin_name) and [bitcoin](coin_name) in [euros](fiat_preference)
+    - get me the price of [tron](coin_name) and [bitcoin](coin_name) in [eur](fiat_preference)
+
+    # 2 coin_name with 2 fiat_preference 
+    - I want to know the price of [tron](coin_name) and [bitcoin](coin_name) in [rupees](fiat_preference) and [dollars](fiat_preference)
+    - price of [tron](coin_name) and [bitcoin](coin_name) in [dollars](fiat_preference) and [pounds](fiat_preference)
+    - tell me the price of [tron](coin_name) and [bitcoin](coin_name) in [dollars](fiat_preference) and [euros](fiat_preference)
+    - tell the price of [tron](coin_name) and [bitcoin](coin_name) in [euros](fiat_preference) and [rupees](fiat_preference)
+    - get me the price of [tron](coin_name) and [bitcoin](coin_name) in [eur](fiat_preference) and [pounds](fiat_preference)
+    - I want to know the price of [tron](coin_name), [bitcoin](coin_name) in [american dollar](fiat_preference) and [indian rupees](fiat_preference)
+    - price of [tron](coin_name), [bitcoin](coin_name) in [Pound Sterling](fiat_preference) and [inr](fiat_preference)
+    - tell me the price of [tron](coin_name), [bitcoin](coin_name) in [euro](fiat_preference) and [rupees](fiat_preference)
+    - tell the price of [tron](coin_name), [bitcoin](coin_name) in [usd](fiat_preference) and [inr](fiat_preference)
+    - get me the price of [tron](coin_name), [bitcoin](coin_name) in [inr](fiat_preference) and [usd](fiat_preference)
+
+- intent: provide_coin_name
+  examples: |
+    - [ethereum](coin_name)
+    - it is [btc](coin_name)
+    - coin name is [ethereum](coin_name)
+    - [btc](coin_name)
+    - [sol](coin_name) it is
+    - show me for [eth](coin_name)
+    - [bitcoin](coin_name)
+    
+
+- intent: provide_fiat_preference
+  examples: |
+    - show in [indian rupees](fiat_preference)
+    - [american dollar](fiat_preference)
+    - in [dollars](fiat_preference)
+    - my preference is [usd](fiat_preference)
+    - [inr](fiat_preference)
+    - [pounds](fiat_preference)
+    
+- synonym: INR
+  examples: |
+    - rupee
+    - rupees
+    - inr
+    - INR
+    - indian rupees
+    - indian rupee
+
+- synonym: USD
+  examples: |
+    - dollar
+    - usd
+    - USD
+    - american dollar
+    - american dollars
+    - dollars
+
+- synonym: EUR
+  examples: |
+    - euros
+    - euro
+
+- synonym: GBP
+  examples: |
+    - Pound Sterling
+    - pound
+    - pounds
+
+- lookup: fiat_preference
+  examples: |
+    - INR
+    - USD
+    - EUR
+    - GBP
+    - Pound Sterling
+    - pound
+    - pounds
+    - euros
+    - euro
+    - dollar
+    - usd
+    - USD
+    - american dollar
+    - american dollars
+    - dollars
+    - rupee
+    - rupees
+    - inr
+    - INR
+    - indian rupees
+    - indian rupee
+
+- lookup: coin_name
+  examples: |
+    - bitcoin
+    - btc
+    - ethereum
+    - eth
+    - binance-coin
+    - binance coin
+    - bnb
+    - tether
+    - usdt
+    - solana
+    - sol
+    - cardano
+    - ada
+    - usd-coin
+    - usd coin
+    - usdc
+    - xrp
+    - xrp
+    - polkadot-new
+    - polkadot
+    - dot
+    - luna-coin
+    - luna coin
+    - luna
+    - dogecoin
+    - doge
+    - avalanche
+    - avax
+    - shiba-inu
+    - shiba inu
+    - shib
+    - polygon
+    - matic
+    - crypto-com-coin
+    - crypto.com coin
+    - cro
+    - binance-usd
+    - binance usd
+    - busd
+    - wrapped-bitcoin
+    - wrapped bitcoin
+    - wbtc
+    - litecoin
+    - ltc
+    - algorand
+    - algo
+    - unicorn-token
+    - unicorn token
+    - uni
+    - chainlink
+    - link
+    - tron
+    - trx
+    - bitcoin-cash
+    - bitcoin cash
+    - bch
+    - terrausd
+    - ust
+    - decentraland
+    - mana
+    - stellar
+    - xlm
+    - axie-infinity
+    - axie infinity
+    - axs
+    - multi-collateral-dai
+    - dai
+    - dai
+    - vechain
+    - vet
+    - ftx-token
+    - ftx token
+    - ftt
+    - elrond-egld
+    - elrond
+    - egld
+    - cosmos
+    - atom
+    - internet-computer
+    - internet computer
+    - icp
+    - bitcoin-bep2
+    - bitcoin bep2
+    - btcb
+    - filecoin
+    - fil
+    - ethereum-classic
+    - ethereum classic
+    - etc
+    - hedera
+    - hbar
+    - the-sandbox
+    - the sandbox
+    - sand
+    - theta
+    - theta
+    - fantom
+    - ftm
+    - near-protocol
+    - near protocol
+    - near
+    - bittorrent
+    - btt
+    - monero
+    - xmr
+    - tezos
+    - xtz
+    - klaytn
+    - klay
+    - unus-sed-leo
+    - unus sed leo
+    - leo
+    - loopring
+    - lrc
+    - gala
+    - gala
+    - helium
+    - hnt
+    - golden-ratio-token
+    - golden ratio token
+    - grt
+    - iota
+    - miota
+    - flow
+    - flow
+    - eos
+    - eos
+    - bitcoin-sv
+    - bitcoin sv
+    - bsv
+    - stacks
+    - stx
+    - pancakeswap
+    - cake
+    - maker
+    - mkr
+    - aave
+    - aave
+    - kusama
+    - ksm
+    - ecash
+    - xec
+    - enjin-coin
+    - enjin coin
+    - enj
+    - zcash
+    - zec
+    - bigone-token
+    - bigone token
+    - one
+    - amp
+    - amp
+    - neo
+    - neo
+    - waves
+    - waves
+    - quant
+    - qnt
+    - basic-attention-token
+    - basic attention token
+    - bat
+    - thorchain
+    - rune
+    - chiliz
+    - chz
+    - kadena
+    - kda
+    - kucoin-token
+    - kucoin token
+    - kcs
+    - hydro-protocol
+    - hydro protocol
+    - hot
+    - curve-dao-token
+    - curve dao token
+    - crv
+    - okb
+    - okb
+    - arweave
+    - ar
+    - dash
+    - dash
+    - nexo
+    - nexo
+    - compound-coin
+    - compound coin
+    - comp
+    - celo
+    - celo
+    - huobi-token
+    - huobi token
+    - ht
+    - theta-fuel
+    - theta fuel
+    - tfuel
+    - decred
+    - dcr
+    - trueusd
+    - tusd
+    - mina
+    - mina
+    - nem
+    - xem
+    - iotex
+    - iotx
+    - qtum
+    - qtum
+    - voyager-token
+    - voyager token
+    - vgx
+    - 1inch
+    - 1inch network
+    - 1inch
+    - impermax
+    - imx
+    - xinfin
+    - xdc network
+    - xdc
+    - omg
+    - omg network
+    - omg
+    - ravencoin
+    - rvn
+    - paxos-standard
+    - pax dollar
+    - usdp
+    - ankr
+    - ankr
+    - wax
+    - waxp
+    - oasis-network
+    - oasis network
+    - rose
+    - audius
+    - audio
+    - livepeer
+    - lpt
+    - oasis-network
+    - oasis network
+    - rose
+    - zilliqa
+    - zil
+    - audius
+    - audio
+    - rchain
+    - rev
+    - livepeer
+    - lpt
+    - celsius
+    - cel
+    - bancor
+    - bnt
+    - nft
+    - nft
+    - bitcoin-gold
+    - bitcoin gold
+    - btg
+    - yearn-finance
+    - yearn.finance
+    - yfi
+    - bora
+    - bora
+    - renbtc
+    - renbtc
+    - 0x
+    - zrx
+    - sushiswap
+    - sushi
+    - perpetual-protocol
+    - perpetual protocol
+    - perp
+    - nervos-network
+    - nervos network
+    - ckb
+    - velas
+    - vlx
+    - secret
+    - scrt
+    - telcoin
+    - tel
+    - uma
+    - uma
+    - ontology
+    - ont
+    - synthetix-network-token
+    - synthetix
+    - snx
+    - raydium
+    - ray
+    - gnosis-gno
+    - gnosis
+    - gno
+    - dogelon
+    - dogelon mars
+    - elon
+    - storj
+    - storj
+    - swissborg
+    - chsb
+    - hive-blockchain
+    - hive
+    - hive
+    - ren
+    - ren
+    - iostoken
+    - iost
+    - iost
+    - dydx
+    - dydx
+    - skale-network
+    - skale network
+    - skl
+    - digibyte
+    - dgb
+    - serum
+    - srm
+    - kava
+    - kava
+    - neutrino-usd
+    - neutrino usd
+    - usdn
+    - ocean-protocol
+    - ocean protocol
+    - ocean
+    - wink
+    - winklink
+    - win
+    - golem-network-tokens
+    - golem
+    - glm
+    - nucypher
+    - nu
+    - request
+    - req
+    - polymath-network
+    - polymath
+    - poly
+    - moonriver
+    - movr
+    - nano
+    - xno
+    - casper
+    - cspr
+    - ceek-vr
+    - ceek vr
+    - ceek
+    - xyo
+    - xyo
+    - just
+    - jst
+    - reserve-rights
+    - reserve rights
+    - rsr
+    - ultra
+    - uos
+    - gatetoken
+    - gt
+    - celer-network
+    - celer network
+    - celr
+    - origintrail
+    - trac
+    - fet
+    - fei-usd
+    - fei usd
+    - fei
+    - myneighboralice
+    - alice
+    - wootrade
+    - woo network
+    - woo
+    - digitalbits
+    - xdb
+    - lisk
+    - lsk
+    - injective-protocol
+    - injective protocol
+    - inj
+    - function-x
+    - function x
+    - fx
+    - biconomy
+    - biconomy (bico)
+    - bico
+    - dent
+    - dent
+    - mandala-exchange-token
+    - mandala exchange token
+    - mdx
+    - wazirx
+    - wrx
+    - cartesi
+    - ctsi
+    - alpha-finance-lab
+    - alpha finance lab
+    - alpha
+    - syscoin
+    - sys
+    - chromia
+    - chr
+    - energy-web-token
+    - energy web token
+    - ewt
+    - dvision-network
+    - dvision network
+    - dvi
+    - verge
+    - xvg
+    - swipe
+    - sxp
+    - medibloc
+    - med
+    - polkastarter
+    - pols
+    - reef
+    - reef
+    - pax-gold
+    - pax gold
+    - paxg
+    - coti
+    - coti
+    - husd
+    - husd
+    - unibright
+    - ubt
+    - vethor-token
+    - vethor token
+    - vtho
+    - btc-standard-hashrate-token
+    - bitcoin standard hashrate token
+    - btcst
+    - origin-protocol
+    - origin protocol
+    - ogn
+    - status
+    - snt
+    - bitcoin-diamond
+    - bitcoin diamond
+    - bcd
+    - orchid
+    - oxt
+    - nkn
+    - nkn
+    - crypto-com
+    - mco
+    - mco
+    - sun-token
+    - sun (new)
+    - sun
+    - ardor
+    - ardr
+    - civic
+    - cvc
+    - rlc
+    - iexec rlc
+    - rlc
+    - mx-token
+    - mx token
+    - mx
+    - zel
+    - flux
+    - flux
+    - conflux-network
+    - conflux
+    - cfx
+    - aelf
+    - elf
+    - bakerytoken
+    - bake
+    - divi
+    - divi
+    - stormx
+    - stmx
+    - ontology-gas
+    - ontology gas
+    - ong
+
+
+# - intent: user_chose_coin_price
+#   examples: |
+#     - price
+
+# - intent: user_chose_coin_details
+#   examples: |
+#     - details
+#     - detail
+  
+# - intent: user_chose_coin_compare
+#   examples: |
+#     - compare 2 coins
+#     - compare two coins
+#     - compare

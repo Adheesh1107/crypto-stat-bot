@@ -1,0 +1,125 @@
+version: "2.0"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - bot_challenge
+  - chitchat
+  - faq
+  - fetch_coin_price
+  - provide_coin_name
+  - provide_fiat_preference
+  - user_chose_coin_price
+  - user_chose_coin_details
+  - fetch_coin_details
+  - compare_coins
+
+actions:
+  - action_fetch_username
+  - action_fetch_coin_price
+  - action_check_compare_possibility
+  - action_compare_coins
+
+entities: 
+  - fiat_preference
+  - coin_name
+slots:
+  fiat_preference:
+    type: list
+    influence_conversation: false
+  coin_name:
+    type: list
+    influence_conversation: false
+  
+  username:
+    type: text
+    influence_conversation: false
+  is_username_set:
+    type: bool
+    influence_conversation: false
+    initial_value: false
+
+  all_coins_per_session:
+    type: list
+    influence_conversation: false
+  
+  compare_possible:
+    type: bool
+    influence_conversation: true
+    initial_value: null
+  
+
+responses:
+  utter_intro:
+      - condition:
+          - type: slot
+            name: is_username_set   
+            value: true
+        text: "Hey {username}! I am Crypto-stat-bot. I can tell information about various cryptocurrencies. Would you be interested in that?"
+
+      - text: "Hey! I am Crypto-stat-bot. I can tell information about various cryptocurrencies. Would you be interested in that?"
+  utter_ask_continue:
+  - text: Hope this helped. Would you like to browse other features?
+    buttons:
+    - title: Yes
+      payload: /affirm
+    - title: No
+      payload: /deny
+  utter_features_available:
+  - text: "Here are the things i can do: 1) fetch pricing information 2) Compare between crypto-coins"
+    buttons:
+    - title: Price of a crypto-coins
+      payload: /fetch_coin_price  
+    - title: Compare between crypto-coins
+      payload: /compare_coins  
+  utter_ask_coin_name:
+  - text: "Please provide the name of the coin"
+  utter_ask_fiat_preference:
+  - text: "What is your prefered fiat currency? (If multiple values, please provide as comma separated values)"
+  utter_compare_requirements:
+  - text: "For comparison, please provide two or more coin names"
+  utter_compare_invalid_input:
+  - text: "One coin is insufficient for comparison. Please provide two or more coin names again"
+
+  # fallback and out of scope
+  utter_out_of_scope:
+  - text: Sorry, I'm not developed to handle this particular request. It's out-of-scope
+  utter_please_rephrase:
+  - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  utter_default_core_fallback:  
+  - text: Sorry, i am unclear on what i should be doing next. Can you be more specific on what you wanna achieve
+
+  # chitchats
+  utter_chitchat/ask_weather:
+  - text: Oh, it does look sunny in my place too.
+  - text: I'm not sure about the weather right now, sorry about that.
+  utter_chitchat/ask_name:
+  - text: You can call me crypto bot. I can provide pricing information of cryptocurrencies
+  - text: I am a crypto-stat-bot. I can provide pricing information of cryptocurrencies
+  utter_faq/cmc_rank_meaning: 
+  - text: CMC Rank stands for CoinMarketCap Rank. CoinMarketCap is the world's most-referenced price-tracking website for cryptoassets. Ranking a coin is based on value that coin holds.
+  utter_faq/ask_exchanges:
+  - text: you can trade cryptocurrency in exchanges like Binance, WazirX only
+  utter_faq/difference_from_stocks:     # need to add details
+  - text: stocks are centralized while cryptocurrency is decentralized.
+  utter_faq/supporting_fiat_currencies:
+  - text: As of now, I support USD(American Dollar), INR(Indian Rupee), EUR(Euro), GBP(Pound Sterling)
+  utter_faq/define_fiat:
+  - text: "Fiat currencies are a medium of exchange established as money, often by government regulation. Examples: USD, INR"
+  utter_faq/available_coins:
+  - text: There are around 15586 cryptocurrencies in which 8248 are active right now. 
+  utter_faq/available_exchanges:
+  - text: There were around 1552 exchanges in which 447 are active right now. 
+  utter_faq/gbp_meaning:
+  - text: "'Pound Sterling' is represented as GBP"
+  utter_goodbye:
+  - text: "Bye"
+  - text: "Great, Thanks!"
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
